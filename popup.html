@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureKeygen</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    .glow-text {
+      text-shadow: 
+        0 0 10px #169FE3, 
+        0 0 20px #169FE3, 
+        0 0 40px #169FE3, 
+        0 0 60px #169FE3, 
+        0 0 80px #169FE3, 
+        0 0 100px #169FE3, 
+        0 0 150px #169FE3,
+        0 0 5px black; /* White border */
+    }
+  </style>
+</head>
+
+<body class="bg-black">
+  <div id="particles-js" class="absolute inset-0 z-0"></div>
+  <div class="container mx-auto px-4 py-8 relative z-10 text-center">
+    <h1 class="text-3xl font-semibold mb-6 text-white glow-text">SecureKeygen</h1>
+
+    <div class="flex items-center justify-center space-x-2 mb-4">
+      <label for="password-length" class="text-lg text-white">Password Length:</label>
+      <input type="number" id="password-length" min="6" max="30" value="12" class="w-20 px-2 py-1 border border-gray-300 rounded-md bg-gray-900 text-white">
+    </div>
+    <div class="flex flex-col items-center mb-4">
+      <button id="generate-btn" class="px-4 py-2 bg-gray-900 text-white border border-169FE3 rounded-md hover:bg-169FE3 transition duration-200 mb-2">Generate Password</button>
+    </div>
+      <p class="text-lg text-gray-400">Your Secure Password:</p>
+    <div class="flex items-center justify-center space-x-4">
+      <div class="relative">
+        <input type="text" id="password" readonly class="w-60 px-4 py-2 border border-gray-300 rounded-md pr-10 text-white bg-gray-900">
+        <button id="copy-btn" class="absolute right-2 top-2 w-8 h-8 bg-gray-200 rounded-md flex items-center justify-center hover:bg-gray-300 transition duration-200 mb-2">
+          <i class="fas fa-copy text-gray-600"></i>
+        </button>
+      </div>
+    </div>
+  
+  </div>
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 100 },
+        color: { value: '#fff' },
+        shape: { type: 'circle' },
+        opacity: { value: 0.5 },
+        size: { value: 3 },
+        move: { enable: true, speed: 2 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } }
+    });
+
+    document.getElementById('generate-btn').addEventListener('click', function() {
+      var length = document.getElementById('password-length').value;
+      var password = generatePassword(length);
+      document.getElementById('password').value = password;
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', function() {
+      var passwordField = document.getElementById('password');
+      passwordField.select();
+      document.execCommand('copy');
+    });
+
+    function generatePassword(length) {
+      var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+      var password = '';
+      for (var i = 0; i < length; i++) {
+        var randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+      }
+      return password;
+    }
+  </script>
+</body>
+</html>
